@@ -1,5 +1,6 @@
-var Discord = require('discord.io');
+const Eris = require("eris");
 var auth = require('./auth.json');
+var bot = new Eris("auth.token");
 
 // Initialize Discord Bot
 var bot = new Discord.Client({

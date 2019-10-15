@@ -1,13 +1,16 @@
 {
-  "name": "greeter-bot",
-  "version": "1.0.0",
-  "description": "My own Discord bot",
-  "main": "index.js",
-  "author": "CyTic9",
-  "dependencies": {
-    "eris": "^0.10.1"
-  },
-  "engines": {
-    "node": "10.16.3"
-  }
+	"name": "greeter-bot",
+	"version": "1.0.0",
+	"description": "My own Discord bot",
+	"main": "index.js",
+	"scripts": {
+		"start": "index.js"
+	}
+	"author": "CyTic9",
+	"dependencies": {
+		"eris": "^0.10.1"
+	},
+	"engines": {
+		"node": "10.16.3"
+	}
 }
