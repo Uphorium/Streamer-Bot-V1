@@ -1,10 +1,18 @@
 const Eris = require("eris");
+const express = require('express')
 var token;
 if (process.argv[2]) {
 	token = process.argv[2];
 } else {
 	token = require('./auth.json').token;
 }
+
+const app = express()
+const port = process.env.PORT || 3000;
+app.listen(port, () => {
+    console.log(`Our app is running on port ${ port }`);
+});
+
 var config = {
 	"welcomeChannel": "467953550711062530",
 	"defaulOptions": {},
