@@ -21,17 +21,21 @@ var config = {
 		requirements: {
 			roleNames: ["Owner"]
 		},
-		hidden: true,
+		//hidden: true,
 		description: "command",
-		fullDescription: "a dev command"
+		fullDescription: "a dev command",
+		deleteCommand: false
 	},
 	"del": {deleteCommand: true}
 };
 // Initialize Discord Bot
 var bot = new Eris.CommandClient(token, {}, {
-    description: "A test bot made with Eris",
-    owner: "CyTic",
-    prefix: "/"
+	description: "A test bot made with Eris",
+	owner: "CyTic",
+	prefix: "/",
+	defaultCommandOptions: {
+		deleteCommand: true
+	}
 });
 
 bot.on("ready", () => { // When the bot is ready
@@ -47,6 +51,7 @@ bot.on("guildMemberAdd", (guild, member) => {
 });
 
 bot.registerCommandAlias("halp", "help"); // Alias !halp to !help
+bot.registerCommandAlias("commands", "help"); // Alias !halp to !help
 
 bot.registerCommand("ping", (msg, args) => {
 	switch(msg.member.id) {
