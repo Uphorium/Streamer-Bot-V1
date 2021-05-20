@@ -8,8 +8,13 @@
 	},
 	"author": "CyTic9",
 	"dependencies": {
-		"eris": "^0.10.1",
-		"express": "^4.17.1"
+		"dotenv": "^9.0.2",
+		"eris": "^0.13.1",
+		"express": "^4.17.1",
+		"readline-sync": "^1.4.10",
+		"steam": "^1.4.1",
+		"steam-totp": "^2.1.1",
+		"steam-user": "^4.15.3"
 	},
 	"engines": {
 		"node": "10.16.3"

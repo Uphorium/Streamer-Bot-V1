@@ -1,17 +1,30 @@
 const Eris = require("eris");
-const express = require('express')
-var token;
+const express = require('express');
+require('dotenv').config();
+var token = process.env.BOT_TOKEN;
 if (process.argv[2]) {
 	token = process.argv[2];
-} else {
-	token = require('./auth.json').token;
 }
 
 const app = express()
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
-    console.log(`Our app is running on port ${ port }`);
+    console.log(`NodeJS app is running on port ${ port }`);
 });
+
+app.use(express.static(__dirname + '/public'))
+
+app.get('/', function(request, response) {
+	let message = 'Hello World! ' + request;
+	response.send(message);
+})
+
+var referenceMessageInfo = {
+	id: "712464257488257034",
+	channelid: "712432299073077277"
+};
+var referenceMessage;
+var dataChunk1 = {};
 
 var config = {
 	"welcomeChannel": "467953550711062530",
@@ -26,11 +39,17 @@ var config = {
 		fullDescription: "a dev command",
 		deleteCommand: false
 	},
+	"murOptions1": {
+		//hidden: true,
+		description: "command",
+		fullDescription: "a dev command",
+		deleteCommand: false
+	},
 	"del": {deleteCommand: true}
 };
 // Initialize Discord Bot
 var bot = new Eris.CommandClient(token, {}, {
-	description: "A test bot made with Eris",
+	description: "A bot made with Eris",
 	owner: "CyTic",
 	prefix: "/",
 	defaultCommandOptions: {
@@ -42,6 +61,9 @@ bot.on("ready", () => { // When the bot is ready
    console.log('Connected');
 	console.log('Logged in as: ');
 	console.log(bot.user.username + ' (' + bot.user.id + ') - online');
+	
+	//console.log(bot.getChannel(referenceMessageInfo.channelid));
+	bot.getMessage(referenceMessageInfo.channelid, referenceMessageInfo.id).then((result) => {referenceMessage = result;}, (err) => {console.log(err);});
 });
 bot.on("guildMemberAdd", (guild, member) => {
 	if (bot.channelGuildMap[config.welcomeChannel])
@@ -51,7 +73,7 @@ bot.on("guildMemberAdd", (guild, member) => {
 });
 
 bot.registerCommandAlias("halp", "help"); // Alias !halp to !help
-bot.registerCommandAlias("commands", "help"); // Alias !halp to !help
+bot.registerCommandAlias("commands", "help"); // Alias !commands to !help
 
 bot.registerCommand("ping", (msg, args) => {
 	switch(msg.member.id) {
@@ -78,6 +100,23 @@ bot.registerCommand("pong", ["Pang!", "Peng!", "Ping!", "Pung!"], { // Make a po
 bot.registerCommand("donate", "You can get special VIP status and perks by donating here: http://wtsf.22web.org/donate.html", {
 	description: "Donate command",
    fullDescription: "Use this command to learn more about donating."
+});
+bot.registerCommand("voteCandidates", (msg, args) => {
+	return "Hi";
+}, {
+	...config.murOptions1,
+	...config.del
+});
+bot.registerCommand("vote", (msg, args) => {
+	if (args[0]) {
+		whoFor = args[0];
+		dataChunk1[msg.member.id] = whoFor;
+		//bot.getUserProfile(whoFor).then((result) => {dataChunk1[whoFor]++}, (err) => {console.log(err);});
+		referenceMessage.edit(dataChunk1);
+	}
+}, {
+	...config.murOptions1,
+	...config.del
 });
 bot.registerCommand("test", "...", {
 	...config.devOptions1,
