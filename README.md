@@ -1,2 +1,2 @@
 # Streamer-Bot-V1
-Simple bot for my discord server.
+Simple chat bot for my discord server.
